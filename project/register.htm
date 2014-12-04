@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Register </title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../js/js.js"></script>
+<script>
+    $(document).ready(function(){
+       $("#email").focus();
+       $("#email").focusout(function(){
+        txt=$("#email").val();
+        $.post(
+            "check.php",
+            {suggest: txt},
+            function(result){
+                $("#valid").html(result);
+         });
+       });
+       
+       $("#register").click(function(){
+        $.post('register.php',
+        {
+            res: 'true',
+            username: $("#username").val(),
+            email: $("#email").val(),
+            password: $("#password").val(),
+            confirm: $("#confirm").val()
+        },
+        function(data){
+            $("#goal").html(data);
+       });
+     });
+     $("#login").click(function(){
+        self.location='login.htm';
+     });
+    });
+</script>
+</head>
+<body>
+<div id="wrapper">
+    <div class="info" style="
+    text-align: center;
+    margin: 150px auto;
+    border: solid black 1px;
+"><div class="login" style="
+    text-align: center;
+	font-size: larger;
+"> Register</div>
+    	<div style="
+    text-align: center;
+"><div style="
+    width: 100px;
+    display: inline-block;
+    text-align: left;
+">Email: </div><input type="email" name="email" id="email" autofocus="autofocus" placeholder="Please input your email in here;" />*
+        </div>
+		<span id="valid"></span>
+        <div style="
+    text-align: center;
+"><div style="
+    width: 100px;
+    display: inline-block;
+    text-align: left;
+">Username: </div><input type="text" name="username" id="username" placeholder="Please input your username in here;" />*</div>
+    	<div style="
+    text-align: center;
+"><div style="
+    width: 100px;
+    display: inline-block;
+    text-align: left;
+">Password: </div><input type="password" name="password" id="password" placeholder="Please input your password in here;" />*</div>
+        <div style="
+    text-align: center;
+"><div style="
+    width: 100px;
+    display: inline-block;
+    text-align: left;
+">Password confirm: </div><input type="password" name="confirm" id="confirm" placeholder="Please input password in here again;" />*</div>
+        <div style="
+    text-align: center;
+">
+            <input type="submit" name="register" id="register" value="Register" />
+            <input type="button" name="login" id="login" value="Back to login" />
+        </div>
+        <div class="blue"><b>**LOGIN!&nbsp</b>If you had really a account.</div>
+        <div id="goal"></div>
+    </div>
+</div>
+</body>
+</html>

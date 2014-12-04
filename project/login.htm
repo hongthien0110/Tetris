@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Login </title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../js/js.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#signup").click(function(){
+           self.location='register.htm';
+       });
+	$("#detroy_session").load("detroy_session.php");
+    });
+</script>
+</head>
+<body>
+<div id="detroy_session"></div>
+<div id="wrapper">
+    <form action="login.php" method="post" onsubmit="return validate()" class="info" id="form_login" style="
+    text-align: center;
+    margin: 150px auto;
+    border: solid black 1px;
+"><div class="login" style="
+    text-align: center;
+	font-size: larger;
+"> Login </div>
+    	<div style="
+    text-align: center;
+"><div style="
+    width: 70px;
+    display: inline-block;
+    text-align: left;
+">Email: </div><input type="email" name="email" id="email" placeholder="Please input your email in here;"></div>
+    	<div style="
+    text-align: center;
+"><div style="
+    width: 70px;
+    display: inline-block;
+    text-align: left;
+">Password: </div><input type="password" name="password" id="password" placeholder="Please input your password in here;"></div>
+    	<div style="
+    text-align: center;
+">
+            <input type="submit" name="login" id="login" value="Login">
+            <input type="button" name="signup" id="signup" value="Sign Up">
+        </div>
+        <div class="blue"><b>*SIGN UP!&nbsp;</b>It's free and always will be.</div>
+    </form>
+</div>
+<div id="register"></div>
+</body>
+</html>

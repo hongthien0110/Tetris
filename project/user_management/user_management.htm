@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" />
+	<meta name="author" content="ThienSuper" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>User Management</title>
+    <script type="text/javascript" src="../js/js.js">
+    </script>
+    <script>
+function reloadpage() {
+    location.reload();
+}
+        $(document).ready(function(){
+$edit=0;
+$add=0;
+            $("#wrapper").load("load_user.php");
+            $("#username").focus();
+            $.get("add.php", function(data){
+                $("#user_id").val(data);
+            });
+            $("#confirm").click(function(){
+		if($edit!=0){ var answer = confirm("Do you want to edit this user?");
+                $.post("user_management.php",
+                {
+                    edit: answer,
+                    user_id: $("#user_id").val(),
+                    username: $("#username").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                },
+                function(data){
+                    $("#result").html(data);
+                });
+}
+		if($add!=0){
+		var answer = confirm("Do you want to add new a user?");
+		$.post("user_management.php",
+                {
+                    add: answer,
+                    user_id: $("#user_id").val(),
+                    username: $("#username").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                },
+                function(data){
+                    $("#result").html(data);
+                });
+		$("#add").click();
+}
+            });
+            $("#del").click(function(){
+                var answer = confirm("Do you want to delete this user?");
+                $.post("user_management.php",
+                {
+                    del: answer,
+                    user_id: $("#user_id").val(),
+                    username: $("#username").val()
+                },
+                function(data){
+                    $("#result").html(data);
+                });
+            });
+            $("#edit").click(function(){
+                $("#info").show();
+		$edit=1;
+		$add=0;
+            });
+            $("#logout").click(function(){
+                var answer = confirm("Do you want to logout?");
+                if(answer) self.location='../logout.php';
+                });
+			$("#info").hide();
+			$("#add").click(function(){
+				$("#info").show();
+		$edit=0;
+		$add=1;
+			});
+        });
+    </script>
+</head>
+
+<body>
+<div class='large'>User Management</div>
+<div id="wrapper"></div>
+<div style="text-align: right; margin-right:30px;">
+	<a href="#info" style="text-decoration: none;"><input type="submit" name="add" id="add" value="Add a new user" /></a>
+	<input type="submit" name="edit" id="edit" value="Edit" />
+	<input type="submit" name="del" id="del" value="Delete" />
+	<input type="submit" name="logout" id="logout" value="Logout" />
+</div>
+    <div id="info" style="display: block; border: solid black 1px;"><div style="
+    text-align: center;
+    font-size: larger;
+"> Infomation </div>
+        <div style="
+    text-align: center;
+"><div style="
+    display: inline-block;
+    width: 70px;
+    text-align: left;
+">User ID: </div><input type="text" name="user_id" id="user_id" placeholder="Not choice;;" class="disable" readonly=""></div>
+        <div style="
+    text-align: center;
+"><div style="
+    display: inline-block;
+    width: 70px;
+    text-align: left;
+">Username:</div><input type="text" name="username" id="username" placeholder="Not choice;;"></div>
+        <div style="
+    text-align: center;
+"><div style="
+    display: inline-block;
+    width: 70px;
+    text-align: left;
+">Email:</div><input type="email" name="email" id="email" placeholder="Not choice;;"></div>
+        <div style="
+    text-align: center;
+"><div style="
+    display: inline-block;
+    width: 70px;
+    text-align: left;
+">Password:</div><input type="text" name="password" id="password" placeholder="Not choice;;"></div>
+<div style="
+    text-align: center;
+"><input type="submit" name="confirm" id="confirm" value="Confirm">
+		<input type="submit" name="cancel" id="cancel" value="Cancel">
+</div>
+    </div>
+<div id="result" class="block"></div>
+</body>
+</html>
